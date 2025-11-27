@@ -1,6 +1,7 @@
 import { useContext, useState, useRef } from 'react';
 import ToDoContext from '../Context';
 import TaskEditMode from './TaskEditMode';
+import useClickOutside from '../hooks/useClickOutside ';
 
 const Task = ({ task }) => {
   const { setTasks } = useContext(ToDoContext);
@@ -35,8 +36,15 @@ const Task = ({ task }) => {
     setTasks((tasks) => tasks.filter((task) => task.id !== id));
   };
 
+  const onCancelClick = () => {
+    setEditText(task.title);
+    setIsEdit(false);
+  };
+
+  const ref = useClickOutside(() => onCancelClick());
+
   return (
-    <>
+    <li className="task-item" ref={ref}>
       <input
         id={task.id}
         type="checkbox"
@@ -56,6 +64,7 @@ const Task = ({ task }) => {
             task={task}
             setIsEdit={setIsEdit}
             inputRef={inputRef}
+            onCancelClick={onCancelClick}
           />
         ) : (
           <p>{task.title}</p>
@@ -71,7 +80,7 @@ const Task = ({ task }) => {
         )}
         <button onClick={() => handleClickDelete(task.id)}>X</button>
       </div>
-    </>
+    </li>
   );
 };
 

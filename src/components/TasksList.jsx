@@ -11,9 +11,9 @@ const TasksList = () => {
         <li>Пусто </li>
       ) : (
         filteredTasks.map((task) => (
-          <li key={task.id} className="task-item">
+          <span key={task.id}>
             <Task task={task} />
-          </li>
+          </span>
         ))
       )}
     </ul>

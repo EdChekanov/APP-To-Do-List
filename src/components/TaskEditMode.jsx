@@ -1,22 +1,13 @@
-import useClickOutside from '../hooks/useClickOutside ';
-
 const TaskEditMode = ({
   editText,
   setEditText,
   handleClickEdit,
   task,
-  setIsEdit,
   inputRef,
+  onCancelClick,
 }) => {
-  const onCancelClick = () => {
-    setEditText(task.title);
-    setIsEdit(false);
-  };
-
-  const ref = useClickOutside(() => onCancelClick());
-
   return (
-    <div ref={ref}>
+    <>
       <input
         type="text"
         value={editText}
@@ -28,7 +19,7 @@ const TaskEditMode = ({
           }
         }}
       />
-    </div>
+    </>
   );
 };
 
