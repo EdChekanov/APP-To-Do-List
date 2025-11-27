@@ -1,34 +1,16 @@
-import { useContext } from 'react';
-import ToDoContext from '../Context';
+import FilterButton from './FilterButton';
 
 const Filters = () => {
-  const { filter, setFilter } = useContext(ToDoContext);
-
   return (
     <ul className="filters">
       <li>
-        <button
-          onClick={() => setFilter('all')}
-          className={filter === 'all' ? 'active' : ''}
-        >
-          Все
-        </button>
+        <FilterButton content="Все" method="all" />
       </li>
       <li>
-        <button
-          onClick={() => setFilter('active')}
-          className={filter === 'active' ? 'active' : ''}
-        >
-          Активные
-        </button>
+        <FilterButton content="Активные" method="active" />
       </li>
       <li>
-        <button
-          onClick={() => setFilter('done')}
-          className={filter === 'done' ? 'active' : ''}
-        >
-          Завершённые
-        </button>
+        <FilterButton content="Завершённые" method="done" />
       </li>
     </ul>
   );

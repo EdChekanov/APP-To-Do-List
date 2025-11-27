@@ -29,7 +29,13 @@ function App() {
 
   return (
     <ToDoContext.Provider
-      value={{ tasks, setTasks, filter, setFilter, filteredTasks }}
+      value={{
+        tasks,
+        setTasks,
+        filter,
+        setFilter,
+        filteredTasks,
+      }}
     >
       <div className="wrapper">
         <Header />
