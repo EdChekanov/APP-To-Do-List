@@ -1,19 +1,25 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { useState } from 'react';
+import { useTasksApi } from './hooks/useTasksApi';
 import ToDoContext from './Context';
 import Header from './components/Header';
 import InputTask from './components/InputTask';
 import TasksList from './components/TasksList';
 import Filters from './components/Filters';
 import Footer from './components/Footer';
+import './App.css';
 
 function App() {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem('tasks')) || [
-      { id: 1, title: 'Выучить react', isDone: false },
-      { id: 2, title: 'Сдать 2-й чек-лист', isDone: false },
-    ]
-  );
+  const {
+    tasks,
+    loading,
+    error,
+    setTasks,
+    handleAddTask,
+    handleComplete,
+    handleDelete,
+    handleDeleteCompleted,
+    handleEdit,
+  } = useTasksApi();
 
   const [filter, setFilter] = useState('all');
 
@@ -23,9 +29,8 @@ function App() {
     return true;
   });
 
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+  if (loading) return <h1>Загрузка...</h1>;
+  if (error) return <h1>Ошибка: {error.message}</h1>;
 
   return (
     <ToDoContext.Provider
@@ -35,6 +40,11 @@ function App() {
         filter,
         setFilter,
         filteredTasks,
+        handleAddTask,
+        handleComplete,
+        handleDelete,
+        handleDeleteCompleted,
+        handleEdit,
       }}
     >
       <div className="wrapper">

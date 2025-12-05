@@ -95,6 +95,10 @@ input[type="text"]:focus {
   box-sizing: border-box;
 }
 
+.task-item label {
+  width: 100%;
+}
+
 /* Кнопка удаления задачи */
 .task-item button {
   background-color: #dc3545;

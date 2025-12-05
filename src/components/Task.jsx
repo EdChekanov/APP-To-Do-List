@@ -4,7 +4,7 @@ import TaskEditMode from './TaskEditMode';
 import useClickOutside from '../hooks/useClickOutside ';
 
 const Task = ({ task }) => {
-  const { setTasks } = useContext(ToDoContext);
+  const { handleComplete, handleDelete, handleEdit } = useContext(ToDoContext);
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(task.title);
 
@@ -12,28 +12,11 @@ const Task = ({ task }) => {
 
   const handleClickEdit = (id, newTitle, ref) => {
     if (newTitle.trim().length) {
-      setTasks((tasks) =>
-        tasks.map((task) => {
-          if (task.id === id) return { ...task, title: newTitle };
-          return task;
-        })
-      );
+      handleEdit(id, newTitle);
       setIsEdit((v) => !v);
     } else {
       ref.current.querySelector('input').style.backgroundColor = 'tomato';
     }
-  };
-
-  const handleClickComplete = (id) => {
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
-    );
-  };
-
-  const handleClickDelete = (id) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
   };
 
   const onCancelClick = () => {
@@ -48,12 +31,12 @@ const Task = ({ task }) => {
       <input
         id={task.id}
         type="checkbox"
-        onChange={() => handleClickComplete(task.id)}
-        checked={task.isDone}
+        onChange={() => handleComplete(task.id)}
+        checked={task.isCompleted}
       />
       <label
         ref={inputRef}
-        className={task.isDone ? 'done' : ''}
+        className={task.isCompleted ? 'done' : ''}
         htmlFor={task.id}
       >
         {isEdit ? (
@@ -78,7 +61,7 @@ const Task = ({ task }) => {
         ) : (
           <button onClick={() => setIsEdit(true)}>&#x270E;</button>
         )}
-        <button onClick={() => handleClickDelete(task.id)}>X</button>
+        <button onClick={() => handleDelete(task.id)}>X</button>
       </div>
     </li>
   );

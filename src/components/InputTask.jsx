@@ -3,19 +3,16 @@ import ToDoContext from '../Context';
 
 const InputTask = () => {
   const inputRef = useRef(null);
-  const { setTasks } = useContext(ToDoContext);
+  const { handleAddTask } = useContext(ToDoContext);
   const [inputText, setInputText] = useState('');
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!inputText.trim()) {
       inputRef.current.style.backgroundColor = 'tomato';
       setInputText('');
       return;
     }
-    setTasks((tasks) => [
-      ...tasks,
-      { id: crypto.randomUUID(), title: inputText, isDone: false },
-    ]);
+    await handleAddTask(inputText);
     setInputText('');
   };
 
