@@ -6,7 +6,7 @@ import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/APP-To-Do-List">
       <App />
     </BrowserRouter>
   </StrictMode>
