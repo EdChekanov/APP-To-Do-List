@@ -11,12 +11,12 @@ const Task = ({ task }) => {
   const inputRef = useRef(null);
 
   const handleClickEdit = (id, newTitle, ref) => {
-    if (newTitle.trim().length) {
-      handleEdit(id, newTitle);
-      setIsEdit((v) => !v);
-    } else {
+    if (!newTitle.trim()) {
       ref.current.querySelector('input').style.backgroundColor = 'tomato';
+      return;
     }
+    handleEdit(id, newTitle);
+    setIsEdit((v) => !v);
   };
 
   const onCancelClick = () => {
@@ -44,7 +44,7 @@ const Task = ({ task }) => {
             editText={editText}
             setEditText={setEditText}
             handleClickEdit={handleClickEdit}
-            task={task}
+            taskId={task.id}
             setIsEdit={setIsEdit}
             inputRef={inputRef}
             onCancelClick={onCancelClick}

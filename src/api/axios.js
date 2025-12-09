@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://todo-redev.herokuapp.com/api/todos',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,9 +9,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token =
-      localStorage.getItem('token') ||
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVkX2NoZWthbm92QGdtYWlsLmNvbSIsImlkIjoyMDA0LCJpYXQiOjE3NjQ5NjAzMjR9.UC9xEhMQO6oi_EDtb99L3kRyMjtL00UITAHrMaLBjcY';
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

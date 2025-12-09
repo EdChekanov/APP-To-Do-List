@@ -32,7 +32,10 @@ p {
 }
 
 /* Поле для ввода */
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
   padding: 10px 15px;
   font-size: 1rem;
   border: 2px solid #ddd;
@@ -140,4 +143,32 @@ input[type="checkbox"]:checked + label button {
 .task-btns {
   display: flex;
   gap: 0.2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vh;
+}
+
+.form-row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.small-btn-text {
+  font-size: 0.7em;
+  color: rgb(88, 82, 82);
+}
+
+.error-text {
+  position: absolute;
+  width: 20vw;
+  right: -20vw;
+  color: rgb(182, 12, 12);
+  font-size: 15px;
 }
