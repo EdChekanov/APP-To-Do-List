@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTasksApi } from '../hooks/useTasksApi';
-import { useNavigate } from 'react-router';
 import Header from './/Header';
 import InputTask from './InputTask';
 import TasksList from './TasksList';
@@ -33,15 +32,9 @@ const Todo = () => {
     return true;
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate('/login');
-      return;
-    }
     fetchTasks();
-  }, [fetchTasks, navigate]);
+  }, [fetchTasks]);
 
   if (loading) return <h1>Загрузка...</h1>;
   if (error) return <h1>Ошибка: {error.response.body.message}</h1>;

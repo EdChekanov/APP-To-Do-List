@@ -31,17 +31,27 @@ export function useTasksApi() {
   }, []);
 
   const handleComplete = useCallback(async (id) => {
-    await api.patch(`/todos/${id}/isCompleted`);
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
-      )
-    );
+    try {
+      await api.patch(`/todos/${id}/isCompleted`);
+      setTasks((tasks) =>
+        tasks.map((task) =>
+          task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+        )
+      );
+    } catch (error) {
+      console.error('Ошибка изменения состояния задания:', error);
+      setError(error);
+    }
   }, []);
 
   const handleDelete = useCallback(async (id) => {
-    await api.delete(`/todos/${id}`);
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+    try {
+      await api.delete(`/todos/${id}`);
+      setTasks((tasks) => tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.error('Ошибка удаления задания:', error);
+      setError(error);
+    }
   }, []);
 
   const handleDeleteCompleted = async () => {
@@ -49,12 +59,7 @@ export function useTasksApi() {
 
     try {
       await Promise.all(
-        completedTasks.map((task) =>
-          api.delete(`/todos/${task.id}`).catch((error) => {
-            console.error(`Ошибка удаления задания ${task.id}:`, error);
-            setError(error);
-          })
-        )
+        completedTasks.map((task) => api.delete(`/todos/${task.id}`))
       );
       setTasks((tasks) => tasks.filter((task) => !task.isCompleted));
     } catch (error) {
@@ -67,13 +72,18 @@ export function useTasksApi() {
   };
 
   const handleEdit = useCallback(async (id, newTitle) => {
-    await api.patch(`/todos/${id}`, { title: newTitle });
-    setTasks((tasks) =>
-      tasks.map((task) => {
-        if (task.id === id) return { ...task, title: newTitle };
-        return task;
-      })
-    );
+    try {
+      await api.patch(`/todos/${id}`, { title: newTitle });
+      setTasks((tasks) =>
+        tasks.map((task) => {
+          if (task.id === id) return { ...task, title: newTitle };
+          return task;
+        })
+      );
+    } catch (error) {
+      console.error('Ошибка изменения задания:', error);
+      setError(error);
+    }
   }, []);
 
   return {

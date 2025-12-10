@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import api from '../api/axios';
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
 
 const schema = z.object({
   username: z
@@ -49,10 +48,6 @@ const RegisterForm = () => {
       alert(error.response.data.message);
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) navigate('/');
-  }, [navigate]);
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

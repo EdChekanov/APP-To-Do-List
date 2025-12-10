@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import api from '../api/axios';
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
 
 const schema = z.object({
   email: z.string().email('Некорректный email'),
@@ -38,10 +37,6 @@ const LoginForm = () => {
       alert(error.message);
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) navigate('/');
-  }, [navigate]);
 
   return (
     <>
