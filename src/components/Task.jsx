@@ -1,23 +1,22 @@
-import { useContext, useState, useRef } from 'react';
-import ToDoContext from '../Context';
+import { useState, useRef } from 'react';
 import TaskEditMode from './TaskEditMode';
 import useClickOutside from '../hooks/useClickOutside ';
+import { useDispatch } from 'react-redux';
 
 const Task = ({ task }) => {
-  const { setTasks } = useContext(ToDoContext);
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(task.title);
+
+  const dispatch = useDispatch();
 
   const inputRef = useRef(null);
 
   const handleClickEdit = (id, newTitle, ref) => {
     if (newTitle.trim().length) {
-      setTasks((tasks) =>
-        tasks.map((task) => {
-          if (task.id === id) return { ...task, title: newTitle };
-          return task;
-        })
-      );
+      dispatch({
+        type: 'edit task title',
+        payload: { id: id, newTitle: newTitle },
+      });
       setIsEdit((v) => !v);
     } else {
       ref.current.querySelector('input').style.backgroundColor = 'tomato';
@@ -25,15 +24,11 @@ const Task = ({ task }) => {
   };
 
   const handleClickComplete = (id) => {
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
-    );
+    dispatch({ type: 'switch complete status', payload: { id: id } });
   };
 
   const handleClickDelete = (id) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+    dispatch({ type: 'delete task', payload: { id: id } });
   };
 
   const onCancelClick = () => {

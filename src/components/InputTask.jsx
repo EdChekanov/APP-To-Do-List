@@ -1,22 +1,19 @@
-import { useContext, useRef, useState } from 'react';
-import ToDoContext from '../Context';
+import { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const InputTask = () => {
+  const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const { setTasks } = useContext(ToDoContext);
-  const [inputText, setInputText] = useState('');
+  const inputText = useSelector((store) => store.inputText.value);
 
   const handleClick = () => {
     if (!inputText.trim()) {
       inputRef.current.style.backgroundColor = 'tomato';
-      setInputText('');
+      dispatch({ type: 'clear' });
       return;
     }
-    setTasks((tasks) => [
-      ...tasks,
-      { id: crypto.randomUUID(), title: inputText, isDone: false },
-    ]);
-    setInputText('');
+    dispatch({ type: 'add new task', payload: inputText });
+    dispatch({ type: 'clear' });
   };
 
   return (
@@ -24,8 +21,10 @@ const InputTask = () => {
       <input
         ref={inputRef}
         value={inputText}
-        onKeyDown={(e) => (e.key === 'Enter' ? handleClick() : undefined)}
-        onChange={(e) => setInputText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleClick();
+        }}
+        onChange={(e) => dispatch({ type: 'change', payload: e.target.value })}
         onFocus={() => (inputRef.current.style.backgroundColor = 'field')}
         type="text"
         name="task"

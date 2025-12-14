@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import ToDoContext from '../Context';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Footer = () => {
-  const { tasks, setTasks } = useContext(ToDoContext);
+  const tasks = useSelector((store) => store.tasks.value);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
-    setTasks((tasks) => tasks.filter((task) => !task.isDone));
+    dispatch({ type: 'delete completed' });
   };
 
   return (
