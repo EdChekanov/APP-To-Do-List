@@ -14,7 +14,7 @@ const Task = ({ task }) => {
   const handleClickEdit = (id, newTitle, ref) => {
     if (newTitle.trim().length) {
       dispatch({
-        type: 'edit task title',
+        type: 'EDIT_TASK_TITLE',
         payload: { id: id, newTitle: newTitle },
       });
       setIsEdit((v) => !v);
@@ -24,11 +24,11 @@ const Task = ({ task }) => {
   };
 
   const handleClickComplete = (id) => {
-    dispatch({ type: 'switch complete status', payload: { id: id } });
+    dispatch({ type: 'SWITCH_COMPLETE_STATUS', payload: { id: id } });
   };
 
   const handleClickDelete = (id) => {
-    dispatch({ type: 'delete task', payload: { id: id } });
+    dispatch({ type: 'DELETE_TASK', payload: { id: id } });
   };
 
   const onCancelClick = () => {

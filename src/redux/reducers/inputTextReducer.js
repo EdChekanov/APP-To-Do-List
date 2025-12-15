@@ -4,9 +4,9 @@ const initValue = {
 
 const inputTextReducer = (store = initValue, action) => {
   switch (action.type) {
-    case 'change':
+    case 'CHANGE':
       return { ...store, value: action.payload };
-    case 'clear':
+    case 'CLEAR':
       return { ...store, value: '' };
     default:
       return store;

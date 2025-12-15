@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 const InputTask = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const inputText = useSelector((store) => store.inputText.value);
+  const { value: inputText } = useSelector((store) => store.inputText);
 
   const handleClick = () => {
     if (!inputText.trim()) {
       inputRef.current.style.backgroundColor = 'tomato';
-      dispatch({ type: 'clear' });
+      dispatch({ type: 'CLEAR' });
       return;
     }
-    dispatch({ type: 'add new task', payload: inputText });
-    dispatch({ type: 'clear' });
+    dispatch({ type: 'ADD_NEW_TASK', payload: inputText });
+    dispatch({ type: 'CLEAR' });
   };
 
   return (
@@ -24,7 +24,7 @@ const InputTask = () => {
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleClick();
         }}
-        onChange={(e) => dispatch({ type: 'change', payload: e.target.value })}
+        onChange={(e) => dispatch({ type: 'CHANGE', payload: e.target.value })}
         onFocus={() => (inputRef.current.style.backgroundColor = 'field')}
         type="text"
         name="task"

@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import ToDoContext from '../Context';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FilterButton = ({ content, method }) => {
-  const { filter, setFilter } = useContext(ToDoContext);
+  const { filter } = useSelector((store) => store.tasks);
+  const dispatch = useDispatch();
 
   return (
     <button
-      onClick={() => setFilter(method)}
+      onClick={() => dispatch({ type: 'SET_FILTER', payload: method })}
       className={filter === method ? 'active' : ''}
     >
       {content}

@@ -1,11 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ToDoContext from '../Context';
 import Task from './Task';
 
 const TasksList = () => {
-  const tasks = useSelector((store) => store.tasks.value);
-  const { filter } = useContext(ToDoContext);
+  const { value: tasks, filter } = useSelector((store) => store.tasks);
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'active') return !task.isDone;

@@ -13,11 +13,12 @@ const initValue = {
       },
     ]
   ),
+  filter: 'all',
 };
 
 const tasksReducer = (store = initValue, action) => {
   switch (action.type) {
-    case 'add new task':
+    case 'ADD_NEW_TASK':
       return {
         ...store,
         value: [
@@ -29,7 +30,7 @@ const tasksReducer = (store = initValue, action) => {
           },
         ],
       };
-    case 'edit task title':
+    case 'EDIT_TASK_TITLE':
       return {
         ...store,
         value: store.value.map((task) => {
@@ -39,7 +40,7 @@ const tasksReducer = (store = initValue, action) => {
           return task;
         }),
       };
-    case 'switch complete status':
+    case 'SWITCH_COMPLETE_STATUS':
       return {
         ...store,
         value: store.value.map((task) => {
@@ -49,16 +50,17 @@ const tasksReducer = (store = initValue, action) => {
           return task;
         }),
       };
-    case 'delete task':
+    case 'DELETE_TASK':
       return {
         ...store,
         value: store.value.filter((task) => {
           return !(task.id == action.payload.id);
         }),
       };
-    case 'delete completed':
+    case 'DELETE_COMPLETED_TASKS':
       return { ...store, value: store.value.filter((task) => !task.isDone) };
-
+    case 'SET_FILTER':
+      return { ...store, filter: action.payload };
     default:
       return store;
   }
