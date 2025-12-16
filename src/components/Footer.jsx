@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_COMPLETED_TASKS } from '../redux/slices/tasksSlice';
 
 const Footer = () => {
   const { value: tasks } = useSelector((store) => store.tasks);
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch({ type: 'DELETE_COMPLETED_TASKS' });
+    dispatch(DELETE_COMPLETED_TASKS());
   };
 
   return (
