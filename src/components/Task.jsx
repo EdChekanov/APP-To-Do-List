@@ -3,9 +3,9 @@ import TaskEditMode from './TaskEditMode';
 import useClickOutside from '../hooks/useClickOutside ';
 import { useDispatch } from 'react-redux';
 import {
-  EDIT_TASK_TITLE,
-  SWITCH_COMPLETE_STATUS,
-  DELETE_TASK,
+  editTaskTitle,
+  switchCompleteStatus,
+  deleteTask,
 } from '../redux/slices/tasksSlice';
 
 const Task = ({ task }) => {
@@ -18,7 +18,7 @@ const Task = ({ task }) => {
 
   const handleClickEdit = (id, newTitle, ref) => {
     if (newTitle.trim().length) {
-      dispatch(EDIT_TASK_TITLE({ id: id, newTitle: newTitle }));
+      dispatch(editTaskTitle({ id: id, newTitle: newTitle }));
       setIsEdit((v) => !v);
     } else {
       ref.current.querySelector('input').style.backgroundColor = 'tomato';
@@ -26,11 +26,11 @@ const Task = ({ task }) => {
   };
 
   const handleClickComplete = (id) => {
-    dispatch(SWITCH_COMPLETE_STATUS({ id: id }));
+    dispatch(switchCompleteStatus({ id: id }));
   };
 
   const handleClickDelete = (id) => {
-    dispatch(DELETE_TASK({ id: id }));
+    dispatch(deleteTask({ id: id }));
   };
 
   const onCancelClick = () => {

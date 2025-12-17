@@ -6,14 +6,14 @@ const inputTextSlice = createSlice({
   name: 'inputText',
   initialState,
   reducers: {
-    CHANGE(state, action) {
+    change(state, action) {
       state.value = action.payload;
     },
-    CLEAR(state) {
+    clear(state) {
       state.value = '';
     },
   },
 });
 
-export const { CHANGE, CLEAR } = inputTextSlice.actions;
+export const { change, clear } = inputTextSlice.actions;
 export default inputTextSlice.reducer;

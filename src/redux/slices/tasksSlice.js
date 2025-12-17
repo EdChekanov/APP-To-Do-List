@@ -22,14 +22,14 @@ const taskSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    ADD_NEW_TASK(state, action) {
+    addNewTask(state, action) {
       state.value.push({
         id: crypto.randomUUID(),
         title: action.payload,
         isDone: false,
       });
     },
-    EDIT_TASK_TITLE(state, action) {
+    editTaskTitle(state, action) {
       state.value = state.value.map((task) => {
         if (task.id == action.payload.id) {
           return { ...task, title: action.payload.newTitle };
@@ -37,7 +37,7 @@ const taskSlice = createSlice({
         return task;
       });
     },
-    SWITCH_COMPLETE_STATUS(state, action) {
+    switchCompleteStatus(state, action) {
       state.value = state.value.map((task) => {
         if (task.id == action.payload.id) {
           return { ...task, isDone: !task.isDone };
@@ -45,26 +45,26 @@ const taskSlice = createSlice({
         return task;
       });
     },
-    DELETE_TASK(state, action) {
+    deleteTask(state, action) {
       state.value = state.value.filter((task) => {
-        return !(task.id == action.payload.id);
+        return task.id !== action.payload.id;
       });
     },
-    DELETE_COMPLETED_TASKS(state) {
+    deleteCompletedTasks(state) {
       state.value = state.value.filter((task) => !task.isDone);
     },
-    SET_FILTER(state, action) {
+    setFilter(state, action) {
       state.filter = action.payload;
     },
   },
 });
 
 export const {
-  ADD_NEW_TASK,
-  EDIT_TASK_TITLE,
-  SWITCH_COMPLETE_STATUS,
-  DELETE_TASK,
-  DELETE_COMPLETED_TASKS,
-  SET_FILTER,
+  addNewTask,
+  editTaskTitle,
+  switchCompleteStatus,
+  deleteTask,
+  deleteCompletedTasks,
+  setFilter,
 } = taskSlice.actions;
 export default taskSlice.reducer;

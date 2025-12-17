@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CHANGE, CLEAR } from '../redux/slices/inputTextSlice';
-import { ADD_NEW_TASK } from '../redux/slices/tasksSlice';
+import { change, clear } from '../redux/slices/inputTextSlice';
+import { addNewTask } from '../redux/slices/tasksSlice';
 
 const InputTask = () => {
   const dispatch = useDispatch();
@@ -11,11 +11,11 @@ const InputTask = () => {
   const handleClick = () => {
     if (!inputText.trim()) {
       inputRef.current.style.backgroundColor = 'tomato';
-      dispatch(CLEAR());
+      dispatch(clear());
       return;
     }
-    dispatch(ADD_NEW_TASK(inputText));
-    dispatch(CLEAR());
+    dispatch(addNewTask(inputText));
+    dispatch(clear());
   };
 
   return (
@@ -26,7 +26,7 @@ const InputTask = () => {
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleClick();
         }}
-        onChange={(e) => dispatch(CHANGE(e.target.value))}
+        onchange={(e) => dispatch(change(e.target.value))}
         onFocus={() => (inputRef.current.style.backgroundColor = 'field')}
         type="text"
         name="task"

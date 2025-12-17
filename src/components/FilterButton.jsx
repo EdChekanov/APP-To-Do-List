@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_FILTER } from '../redux/slices/tasksSlice';
+import { setFilter } from '../redux/slices/tasksSlice';
 
 const FilterButton = ({ content, method }) => {
   const { filter } = useSelector((store) => store.tasks);
@@ -7,7 +7,7 @@ const FilterButton = ({ content, method }) => {
 
   return (
     <button
-      onClick={() => dispatch(SET_FILTER(method))}
+      onClick={() => dispatch(setFilter(method))}
       className={filter === method ? 'active' : ''}
     >
       {content}
