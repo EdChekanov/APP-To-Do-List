@@ -26,7 +26,7 @@ const InputTask = () => {
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleClick();
         }}
-        onchange={(e) => dispatch(change(e.target.value))}
+        onChange={(e) => dispatch(change(e.target.value))}
         onFocus={() => (inputRef.current.style.backgroundColor = 'field')}
         type="text"
         name="task"
