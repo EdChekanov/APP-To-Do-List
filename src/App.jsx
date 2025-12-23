@@ -1,19 +1,20 @@
+import { Route, Routes } from 'react-router';
+import Todo from './components/Todo';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
-import Header from './components/Header';
-import InputTask from './components/InputTask';
-import TasksList from './components/TasksList';
-import Filters from './components/Filters';
-import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
-      <InputTask />
-      <TasksList />
-      <Filters />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/registration" element={<RegisterForm />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<Todo />} />
+      </Route>
+      <Route path="*" element={<h1>Упс... Ничего не найдено</h1>} />
+    </Routes>
   );
 }
 

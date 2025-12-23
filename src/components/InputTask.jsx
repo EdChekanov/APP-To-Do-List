@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { change, clear } from '../redux/slices/inputTextSlice';
-import { addNewTask } from '../redux/slices/tasksSlice';
+import { addNewTask } from '../redux/api/tasksApi';
 
 const InputTask = () => {
   const dispatch = useDispatch();

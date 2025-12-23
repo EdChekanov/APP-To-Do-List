@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import Task from './Task';
 
 const TasksList = () => {
-  const { value: tasks, filter } = useSelector((store) => store.tasks);
+  const { value: tasks, filter, loading } = useSelector((store) => store.tasks);
 
   const filteredTasks = tasks.filter((task) => {
-    if (filter === 'active') return !task.isDone;
-    if (filter === 'done') return task.isDone;
+    if (filter === 'active') return !task.isCompleted;
+    if (filter === 'done') return task.isCompleted;
     return true;
   });
 
@@ -19,6 +19,13 @@ const TasksList = () => {
     return (
       <ul className="task-list">
         <li>Пусто </li>
+      </ul>
+    );
+
+  if (loading)
+    return (
+      <ul className="task-list">
+        <li>Загрузка...</li>
       </ul>
     );
 

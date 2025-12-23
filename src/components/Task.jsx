@@ -3,10 +3,10 @@ import TaskEditMode from './TaskEditMode';
 import useClickOutside from '../hooks/useClickOutside ';
 import { useDispatch } from 'react-redux';
 import {
-  editTaskTitle,
   switchCompleteStatus,
+  editTaskTitle,
   deleteTask,
-} from '../redux/slices/tasksSlice';
+} from '../redux/api/tasksApi';
 
 const Task = ({ task }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -26,11 +26,11 @@ const Task = ({ task }) => {
   };
 
   const handleClickComplete = (id) => {
-    dispatch(switchCompleteStatus({ id: id }));
+    dispatch(switchCompleteStatus(id));
   };
 
   const handleClickDelete = (id) => {
-    dispatch(deleteTask({ id: id }));
+    dispatch(deleteTask(id));
   };
 
   const onCancelClick = () => {
@@ -46,11 +46,11 @@ const Task = ({ task }) => {
         id={task.id}
         type="checkbox"
         onChange={() => handleClickComplete(task.id)}
-        checked={task.isDone}
+        checked={task.isCompleted}
       />
       <label
         ref={inputRef}
-        className={task.isDone ? 'done' : ''}
+        className={task.isCompleted ? 'done' : ''}
         htmlFor={task.id}
       >
         {isEdit ? (

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCompletedTasks } from '../redux/slices/tasksSlice';
+import { deleteCompletedTasks } from '../redux/api/tasksApi';
 
 const Footer = () => {
   const { value: tasks } = useSelector((store) => store.tasks);
@@ -11,7 +11,7 @@ const Footer = () => {
 
   return (
     <div className="footer">
-      <p>Осталоcь дел: {tasks.filter((task) => !task.isDone).length}</p>
+      <p>Осталоcь дел: {tasks.filter((task) => !task.isCompleted).length}</p>
       <button className="footer-btn" onClick={handleClick}>
         Удалить завершенные дела
       </button>
