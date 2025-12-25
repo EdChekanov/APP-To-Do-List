@@ -3,12 +3,12 @@ import api from '../../api/axios';
 
 export const getTasks = createAsyncThunk(
   'tasks/getTasks',
-  async (state, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const { data } = await api.get('/todos');
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -20,7 +20,7 @@ export const addNewTask = createAsyncThunk(
       const { data } = await api.post('/todos', { title: newTitle });
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -32,7 +32,7 @@ export const editTaskTitle = createAsyncThunk(
       const { data } = await api.patch(`/todos/${id}`, { title: newTitle });
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -44,7 +44,7 @@ export const switchCompleteStatus = createAsyncThunk(
       const { data } = await api.patch(`/todos/${id}/isCompleted`);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -56,14 +56,14 @@ export const deleteTask = createAsyncThunk(
       const { data } = await api.delete(`/todos/${id}`);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const deleteCompletedTasks = createAsyncThunk(
   'tasks/deleteCompletedTasks',
-  async (state, thunkAPI) => {
+  async (_, thunkAPI) => {
     const { value: tasks } = thunkAPI.getState().tasks;
     const completedTasks = tasks.filter((task) => task.isCompleted);
 
@@ -72,7 +72,7 @@ export const deleteCompletedTasks = createAsyncThunk(
         completedTasks.map((task) => api.delete(`/todos/${task.id}`))
       );
     } catch (error) {
-      thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

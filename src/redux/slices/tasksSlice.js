@@ -32,20 +32,20 @@ const taskSlice = createSlice({
         state.value.unshift(action.payload);
       })
       .addCase(editTaskTitle.fulfilled, (state, action) => {
-        state.value = state.value.map((task) => {
-          if (task.id == action.payload.id) {
-            return { ...task, title: action.payload.title };
-          }
-          return task;
-        });
+        const task = state.value.find((task) => task.id === action.payload.id);
+
+        if (task) {
+          task.title = action.payload.title;
+        }
       })
       .addCase(switchCompleteStatus.fulfilled, (state, action) => {
-        state.value = state.value.map((task) => {
-          if (task.id == action.payload.at(0).id) {
-            return { ...task, isCompleted: !task.isCompleted };
-          }
-          return task;
-        });
+        const task = state.value.find(
+          (task) => task.id === action.payload.at(0).id
+        );
+
+        if (task) {
+          task.isCompleted = !task.isCompleted;
+        }
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.value = state.value.filter((task) => {

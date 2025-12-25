@@ -1,15 +1,26 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import Task from './Task';
 
 const TasksList = () => {
-  const { value: tasks, filter, loading } = useSelector((store) => store.tasks);
+  const {
+    value: tasks,
+    filter,
+    loading,
+  } = useSelector(
+    (store) => ({
+      value: store.tasks.value,
+      filter: store.tasks.filter,
+      loading: store.tasks.loading,
+    }),
+    shallowEqual
+  );
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'active') return !task.isCompleted;
-    if (filter === 'done') return task.isCompleted;
-    return true;
-  });
+  const filteredTasks = useMemo(() => {
+    if (filter === 'active') return tasks.filter((task) => !task.isCompleted);
+    if (filter === 'done') return tasks.filter((task) => task.isCompleted);
+    return tasks;
+  }, [tasks, filter]);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -22,21 +33,11 @@ const TasksList = () => {
       </ul>
     );
 
-  if (loading)
-    return (
-      <ul className="task-list">
-        <li>Загрузка...</li>
-      </ul>
-    );
-
   return (
     <ul className="task-list">
+      {loading && <li className="loading-item">Загрузка...</li>}
       {filteredTasks.map((task) => {
-        return (
-          <span key={task.id}>
-            <Task task={task} />
-          </span>
-        );
+        return <Task key={task.id} task={task} />;
       })}
     </ul>
   );

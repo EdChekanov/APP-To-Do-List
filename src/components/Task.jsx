@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, memo } from 'react';
 import TaskEditMode from './TaskEditMode';
 import useClickOutside from '../hooks/useClickOutside ';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,9 @@ import {
   deleteTask,
 } from '../redux/api/tasksApi';
 
-const Task = ({ task }) => {
+const Task = memo(({ task }) => {
+  console.log('task' + task.id);
+
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(task.title);
 
@@ -79,6 +81,6 @@ const Task = ({ task }) => {
       </div>
     </li>
   );
-};
+});
 
 export default Task;

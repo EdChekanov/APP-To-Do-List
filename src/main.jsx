@@ -7,11 +7,11 @@ import App from './App.jsx';
 import store from './redux/store.js';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter basename="/APP-To-Do-List/">
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </StrictMode>
+  // <StrictMode>
+  <BrowserRouter basename="/APP-To-Do-List/">
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
+  //  </StrictMode>
 );
